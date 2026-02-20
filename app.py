@@ -14,11 +14,13 @@ Usage:
 
 import queue
 import threading
+import tkinter as tk
 from datetime import datetime
+from tkinter import messagebox, ttk
+from typing import Any
 
 import cv2
-import tkinter as tk
-from tkinter import messagebox, ttk
+import numpy as np
 from PIL import Image, ImageTk
 
 from detector import ObjectDetector
@@ -73,7 +75,7 @@ class App:
         self._cap: cv2.VideoCapture | None = None
         self._thread: threading.Thread | None = None
         self._queue: queue.Queue = queue.Queue(maxsize=_Q_SIZE)
-        self._current_frame = None   # latest annotated BGR frame (for screenshots)
+        self._current_frame: np.ndarray | None = None  # latest annotated BGR frame (for screenshots)
 
         self._detector = ObjectDetector()
 
@@ -210,8 +212,8 @@ class App:
         frm = self._labeled_frame(parent, "Controls")
         frm.pack(fill=tk.X, padx=8, pady=5)
 
-        _btn = dict(font=("Helvetica", 11, "bold"), bd=0,
-                    relief=tk.FLAT, cursor="hand2", width=19, pady=7)
+        _btn: dict[str, Any] = dict(font=("Helvetica", 11, "bold"), bd=0,
+                                   relief=tk.FLAT, cursor="hand2", width=19, pady=7)
 
         self._start_btn = tk.Button(
             frm, text="  Start Camera",
@@ -415,7 +417,7 @@ class App:
             # PhotoImage must be held by a Python variable; otherwise the
             # garbage collector deletes it before Tkinter can render it.
             self._video_lbl.config(image=photo, text="")
-            self._video_lbl._photo_ref = photo
+            self._video_lbl._photo_ref = photo  # type: ignore[attr-defined]
 
             self._fps_lbl.config(text=f"FPS: {fps:5.1f}")
             self._obj_lbl.config(text=f"Objects: {len(detections)}")

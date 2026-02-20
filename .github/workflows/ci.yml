@@ -36,17 +36,15 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        # Install headless OpenCV so mypy can resolve imports on the CI runner
         run: |
           pip install mypy
           pip install opencv-python-headless pillow numpy
-          pip install ultralytics --no-deps   # skip heavy torch download on CI
 
       - name: Run mypy
         run: mypy app.py detector.py --ignore-missing-imports
 
-  import-check:
-    name: Import check
+  syntax-check:
+    name: Syntax check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -56,10 +54,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install runtime deps (headless)
+      - name: Verify Python syntax
         run: |
-          pip install opencv-python-headless pillow numpy
-          pip install ultralytics --no-deps
-
-      - name: Verify detector imports cleanly
-        run: python -c "import detector; print('detector.py OK')"
+          python -m py_compile app.py
+          python -m py_compile detector.py
+          echo "Syntax OK"

@@ -113,4 +113,4 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-[MIT](LICENSE) © 2025 contributors
+[GPL-3.0 License](LICENSE) Copyright (c) 2026 Sean Morley. All rights reserved.
