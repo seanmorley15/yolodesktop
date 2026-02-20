@@ -80,6 +80,7 @@ class App:
 
         self._build_ui()
         self._schedule_poll()       # start the GUI frame consumer
+        self.root.after(100, self.start_camera)  # auto-start camera on launch
 
     # ══════════════════════════════════════════════════════════════════════════
     # UI construction

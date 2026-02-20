@@ -3,7 +3,7 @@
 A Tkinter desktop application that streams live webcam footage through a **YOLOv8** model and overlays bounding boxes, labels, and confidence scores in real time.
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-GPLv3-green)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
 
 ---
