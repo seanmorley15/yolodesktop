@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Run ruff
+        run: ruff check .
+
+  type-check:
+    name: Type check (mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        # Install headless OpenCV so mypy can resolve imports on the CI runner
+        run: |
+          pip install mypy
+          pip install opencv-python-headless pillow numpy
+          pip install ultralytics --no-deps   # skip heavy torch download on CI
+
+      - name: Run mypy
+        run: mypy app.py detector.py --ignore-missing-imports
+
+  import-check:
+    name: Import check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime deps (headless)
+        run: |
+          pip install opencv-python-headless pillow numpy
+          pip install ultralytics --no-deps
+
+      - name: Verify detector imports cleanly
+        run: python -c "import detector; print('detector.py OK')"
