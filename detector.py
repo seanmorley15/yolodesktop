@@ -14,7 +14,6 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 
-
 # ── Colour palette for bounding boxes (one colour per class, cycling) ─────────
 _PALETTE = [
     (255,  56,  56), (255, 157,  51), ( 34, 197, 255), ( 99, 255,  80),

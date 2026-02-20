@@ -25,7 +25,6 @@ from PIL import Image, ImageTk
 
 from detector import ObjectDetector
 
-
 # ── Layout constants ───────────────────────────────────────────────────────────
 _VIDEO_W = 800          # Default display width  (pixels)
 _VIDEO_H = 600          # Default display height (pixels)
